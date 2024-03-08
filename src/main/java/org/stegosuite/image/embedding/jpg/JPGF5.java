@@ -44,7 +44,7 @@ public class JPGF5
 
 		PayloadEmbedder embedder = new PayloadEmbedder(payload, this.capacity());
 
-		final String comment = "JPEG Encoder Copyright 1998, James R. Weeks and BioElectroMech.  ";
+		final String comment = "";
 		final int quality = 80; // 0 is worst, 100 is best
 
 		ByteArrayOutputStream dataOut = new ByteArrayOutputStream();
