@@ -75,7 +75,10 @@ public class PayloadEmbedder {
 		// Fill header with length and encryption flag
 		byte[] lengthBytes = Arrays.copyOfRange(ByteUtils.intToBytes(data.length), 4 - Payload.LENGTH_NUM_BYTES, 4);
 		data = ByteBuffer.wrap(data).put(lengthBytes).array();
-
+		
+		LOG.debug("lengthBytes-Array: {}",Arrays.toString(lengthBytes));
+		LOG.debug("data-Array: {}",Arrays.toString(data));
+		
 		Double percentage = data.length * 100.0 / capacity;
 		LOG.debug("Packed payload to {} bytes, {}% of total capacity", data.length, DECIMAL.format(percentage));
 	}
@@ -90,7 +93,7 @@ public class PayloadEmbedder {
 	}
 
 	/**
-	 * Retuns the compiled payload bytes that should be embedded
+	 * Returns the compiled payload bytes that should be embedded
 	 *
 	 * @return
 	 */

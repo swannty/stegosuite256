@@ -1,0 +1,87 @@
+.TH "STEGOSUITE" "1" "2022-10-19" "stegosuite 0.9" "Stegosuite Manual"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\fI\\$2\fP <\\$1>\\$3
+..
+.als MTO URL
+.if \n[.g] \{\
+.  mso www.tmac
+.  am URL
+.    ad l
+.  .
+.  am MTO
+.    ad l
+.  .
+.  LINKSTYLE blue R < >
+.\}
+.SH "NAME"
+stegosuite \- Steganography tool to hide information in image files
+.SH "SYNOPSIS"
+.sp
+\fBstegosuite\fP [\fB\-hV\fP] [COMMAND]
+.SH "DESCRIPTION"
+.sp
+Stegosuite is a steganography tool to easily hide information in image files. It allows the embedding of text messages and multiple files of any type. In addition, the embedded data is encrypted using AES. Currently supported  file  types are BMP, GIF, JPG and PNG.
+.SH "OPTIONS"
+.sp
+\fB\-h\fP, \fB\-\-help\fP
+.RS 4
+Show this help message and exit.
+.RE
+.sp
+\fB\-V\fP, \fB\-\-version\fP
+.RS 4
+Print version information and exit.
+.RE
+.SH "COMMANDS"
+.sp
+\fBhelp\fP
+.RS 4
+Displays help information about the specified command
+.RE
+.sp
+\fBgui\fP
+.RS 4
+Starts the GUI
+.RE
+.sp
+\fBembed\fP
+.RS 4
+Embeds data into image
+.RE
+.sp
+\fBextract\fP
+.RS 4
+Extracts data from image
+.RE
+.sp
+\fBcapacity\fP
+.RS 4
+Shows the maximum amount of embeddable data
+.RE
+.SH "EXAMPLE"
+.sp
+\fBstegosuite help embed\fP
+.RS 4
+Displays help for \fBstegosuite embed\fP
+.RE
+.SH "EXIT CODES:"
+.sp
+\fB0\fP
+.RS 4
+Successful program execution
+.RE
+.sp
+\fB1\fP
+.RS 4
+Internal software error: an exception occurred when invoking the business logic of this command.
+.RE
+.sp
+\fB2\fP
+.RS 4
+Usage error: user input for the command was incorrect, e.g., the wrong number of arguments
+.RE

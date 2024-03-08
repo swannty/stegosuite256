@@ -11,8 +11,25 @@
 ​      Stegosuite is a graphical steganography tool to easily hide information in image files. It allows the embedding of text messages and multiple files of any type. In addition, the embedded data is encrypted using AES. Currently supported file types are BMP, GIF, JPG and PNG.
 ​    </p>   
 ​  </description>
-​
-​  <launchable type="desktop-id">stegosuite.desktop</launchable>
+
+  <keywords>
+    <keyword>steganography</keyword>
+    <keyword>embed</keyword>
+    <keyword>extract</keyword>
+    <keyword>image</keyword>
+    <keyword>hide</keyword>
+    <keyword translate="no">stego</keyword>
+    <keyword xml:lang="de">steganographie</keyword>
+    <keyword xml:lang="de">bild</keyword>
+    <keyword xml:lang="de">verstecken</keyword>
+    <keyword xml:lang="de">einbetten</keyword>
+    <keyword xml:lang="de">extrahieren</keyword>
+  </keywords>
+
+  <url type="bugtracker">https://codeberg.org/tob/stegosuite/issues</url>
+  <url type="vcs-browser">https://codeberg.org/tob/stegosuite</url>
+
+​  <launchable type="desktop-id">org.stegosuite.desktop</launchable>
 ​
 ​  <screenshots>
 ​    <screenshot type="default">
@@ -21,10 +38,14 @@
 ​    </screenshot>
 ​  </screenshots>
 ​
-​  <url type="homepage">https://dev.stegosuite.org/stegosuite/stegosuite</url>
+​  <url type="homepage">https://codeberg.org/tob/stegosuite</url>
 ​  
   <provides>
 ​    <binary>stegosuite</binary>
+​    <mediatype>image/gif</mediatype>
+​    <mediatype>image/jpeg</mediatype>
+​    <mediatype>image/bmp</mediatype>
+    <mediatype>image/png</mediatype>
 ​  </provides>
 
   <categories>
@@ -32,14 +53,11 @@
 ​    <category>2DGraphics</category>
     <category>RasterGraphics</category>
 ​  </categories>
-​
-  <mimetypes>
-​    <mimetype>image/gif</mimetype>
-​    <mimetype>image/jpeg</mimetype>
-​    <mimetype>image/bmp</mimetype>
-    <mimetype>image/png</mimetype>
-​  </mimetypes>
 
-  <update_contact>tobias_AT_stegosuite.org</update_contact>
+  <requires>
+    <internet>offline-only</internet>
+  </requires>
+
+  <content_rating type="oars-1.0" />
 
 ​</component>

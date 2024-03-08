@@ -89,6 +89,9 @@ public class GIFSortedColorTable
 		int[] pixels = image.getPixels().clone();
 		List<Color> table = image.getColorTable();
 		List<Color> sortedTable = image.getSortedColorTable(DISTANCE);
+		LOG.debug("origtable size: {}",table.size());
+		LOG.debug("sortedtable size: {}",sortedTable.size());
+		
 		Set<Color> unreferencedColorsBefore = ColorUtils.getUnreferencedColors(table, pixels);
 
 		int currentBit = 0;
@@ -128,7 +131,7 @@ public class GIFSortedColorTable
 		Set<Color> referencedColorsAfter = ColorUtils.getUnreferencedColors(table, pixels);
 		referencedColorsAfter.removeAll(unreferencedColorsBefore);
 		if (!referencedColorsAfter.isEmpty()) {
-			LOG.info("Reinserting {} unreferenced colors", referencedColorsAfter.size());
+			LOG.debug("Reinserting {} unreferenced colors", referencedColorsAfter.size());
 			Map<Color, Integer> histogram = ColorUtils.getHistogram(table, pixels);
 			for (Color unreferencedColor : referencedColorsAfter) {
 				// Sort table by similarity to unreferenced color
@@ -225,7 +228,7 @@ public class GIFSortedColorTable
 			int sortedTableSize = sortedTable.size();
 
 			// In addition to skipping trailing colors, we skip one more color
-			// if the number of colors in the palette is uneven. Otherwise we
+			// if the number of colors in the palette is uneven. Otherwise, we
 			// might switch the last color's LSB from 0 to 1 which increases the
 			// index and therefore causes an ArrayIndexOutOfBoundsException
 			for (int i = 0; i < NUM_SKIP_TRAILING_COLORS + (sortedTableSize % 2); i++) {
@@ -247,7 +250,7 @@ public class GIFSortedColorTable
 
 		GIFImage gifImage = new GIFImage();
 		gifImage.load(carrierFile);
-		LOG.info("{} unreferenced colors", ColorUtils.getUnreferencedColors(gifImage.getHistogram()).size());
+		LOG.debug("{} unreferenced colors", ColorUtils.getUnreferencedColors(gifImage.getHistogram()).size());
 
 		EmbeddingMethod<GIFImage> embeddingMethod = new GIFSortedColorTable(gifImage, new GIFPointFilterHomogeneous());
 
@@ -278,7 +281,7 @@ public class GIFSortedColorTable
 		// Extract
 		gifImage = new GIFImage();
 		gifImage.load(steganogramFile);
-		LOG.info("{} unreferenced colors", ColorUtils.getUnreferencedColors(gifImage.getHistogram()).size());
+		LOG.debug("{} unreferenced colors", ColorUtils.getUnreferencedColors(gifImage.getHistogram()).size());
 		embeddingMethod.extract(payloadExtracted, null);
 
 		// Save extracted contents to file

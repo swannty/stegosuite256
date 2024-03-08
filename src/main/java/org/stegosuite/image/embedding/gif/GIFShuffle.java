@@ -1,5 +1,17 @@
 package org.stegosuite.image.embedding.gif;
 
+import java.awt.Color;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.stegosuite.image.embedding.EmbeddingMethod;
 import org.stegosuite.image.embedding.EmbeddingProgress;
 import org.stegosuite.image.embedding.point.PointFilter;
@@ -14,13 +26,6 @@ import org.stegosuite.util.ByteUtils;
 import org.stegosuite.util.ColorDistance;
 import org.stegosuite.util.CryptoUtils;
 
-import java.awt.*;
-import java.math.BigInteger;
-import java.util.*;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 /**
  * GIFShuffle embedding and extracting procedures. Source: http://www.darkside.com.au/gifshuffle/
  *
@@ -28,11 +33,13 @@ import java.util.stream.IntStream;
 public class GIFShuffle
 		extends EmbeddingMethod<GIFImage> {
 
+	private static final Logger LOG = LoggerFactory.getLogger(GIFShuffle.class);
+	
 	public GIFShuffle(GIFImage image, PointFilter<GIFImage> pointFilter) {
 		super(image, pointFilter);
 	}
 
-	private static final ColorDistance DISTANCE = ColorDistance.RGB_EUCLID;
+	private static final ColorDistance DISTANCE = ColorDistance.CIEDE_2000;
 
 	/**
 	 * Capacity in bits: sum(log2(n)) for n=2..colorTable.size()
@@ -41,6 +48,7 @@ public class GIFShuffle
 	protected int doCapacity(GIFImage image) {
 		int numColors = image.getColorTable().size();
 		double sum = IntStream.range(2, numColors + 1).mapToDouble(i -> Math.log(i) / Math.log(2)).sum();
+		LOG.debug("Capacity: {}",(int) (sum / 8) - 1);
 		return (int) (sum / 8) - 1;
 	}
 
@@ -51,8 +59,17 @@ public class GIFShuffle
 		List<Color> originalTable = image.getColorTable();
 		List<Color> newTable = new ArrayList<>(originalTable);
 		List<Color> randomTable = image.getSortedColorTable(DISTANCE);
+		
+		LOG.debug("Array: {}",Arrays.toString(originalTable.toArray()));
+		LOG.debug("Array: {}",Arrays.toString(randomTable.toArray()));
+		
 		Collections.shuffle(randomTable, CryptoUtils.seededRandom(payload.getSteganoPassword()));
 
+//		LOG.debug("Array: {}",Arrays.toString(randomTable.toArray()));
+		
+		LOG.debug("origtable size: {}",originalTable.size());
+		LOG.debug("randomtable size: {}",randomTable.size());
+		
 		// Prepend 1 to the payload so that leading 0 bytes are not cut off
 		PayloadEmbedder embedder = new PayloadEmbedder(payload, this.capacity());
 		BigInteger numPayload = new BigInteger(ByteUtils.concat(new byte[] { 1 }, embedder.getPayloadBytes()));
@@ -79,8 +96,16 @@ public class GIFShuffle
 			throws SteganoExtractException {
 		List<Color> table = image.getColorTable();
 		List<Color> randomTable = image.getSortedColorTable(DISTANCE);
+				
+		
+		LOG.debug("Array: {}",Arrays.toString(randomTable.toArray()));
+		
 		Collections.shuffle(randomTable, CryptoUtils.seededRandom(payload.getSteganoPassword()));
-
+		
+		
+//		LOG.debug("Array: {}",Arrays.toString(randomTable.toArray()));
+		
+		
 		Map<Color, Integer> positions = IntStream.range(0, table.size()).boxed()
 				.collect(Collectors.toMap(i -> table.get(i), i -> i));
 

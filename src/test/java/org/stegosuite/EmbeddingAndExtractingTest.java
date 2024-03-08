@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.stegosuite.application.StegosuitePresenter;
 import org.stegosuite.application.StegosuiteUI;
+import org.stegosuite.application.embedding.EmbeddingFactory;
 import org.stegosuite.image.embedding.EmbeddingProgress;
 import org.stegosuite.image.embedding.Visualizer;
 import org.stegosuite.image.format.ImageFormat;
@@ -29,6 +30,7 @@ public class EmbeddingAndExtractingTest {
     private final StegosuiteUI ui = new UIStub();
     private String outputPath;
     private String extractedMessage;
+    private EmbeddingFactory embeddingAlgorithm = null;
 
     @After
     public void tearDown() throws Exception {
@@ -37,7 +39,14 @@ public class EmbeddingAndExtractingTest {
 
     @Test
     public void testEmbeddingAndExtractingFromGifFile() throws Exception {
-        testEmbeddingAndThenExtractingOk("sunflower.gif");
+        testEmbeddingAndThenExtractingOk("sunflower3.gif");
+    }
+    
+    @Test
+    public void testEmbeddingAndExtractingFromGifFileUsingGifshuffle() throws Exception {
+    	embeddingAlgorithm = EmbeddingFactory.GIFSHUFFLE;
+        testEmbeddingAndThenExtractingOk("sunflower3.gif");
+        embeddingAlgorithm = null;
     }
 
     @Test
@@ -84,12 +93,14 @@ public class EmbeddingAndExtractingTest {
     private void embedPayload(String imageName, String password, String message) throws SteganoImageException, SteganoEmbedException {
         String imagePath = pathOf(imageName);
         StegosuitePresenter presenter = getPresenterFor(imagePath);
+        presenter.setEmbedding(embeddingAlgorithm);
         presenter.addMessageToPayload(message);
-        presenter.embedNotifying(new EmbeddingProgress(), password);
+        presenter.embedNotifying(new EmbeddingProgress(), password, null);
     }
 
     private void extractPayload(String imagePath, String password) throws SteganoImageException, SteganoExtractException {
         StegosuitePresenter presenter = getPresenterFor(imagePath);
+        presenter.setEmbedding(embeddingAlgorithm);
         presenter.extractNotifying(new EmbeddingProgress(), password);
     }
 
@@ -122,5 +133,5 @@ public class EmbeddingAndExtractingTest {
         @Override
 		public void addPayloadFile(String filename, String extension, long fileSize) {
 		}
-    }
+	}
 }

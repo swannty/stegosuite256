@@ -394,7 +394,7 @@ class MyDialog
 
 		Label lblMessage2 = new Label(shell, SWT.WRAP);
 		FormData fd_lblMessage2 = new FormData();
-		lblMessage2.setText("0.8");
+		lblMessage2.setText("0.9");
 		offsetX = -lblMessage2.computeSize(SWT.DEFAULT, SWT.DEFAULT).x / 2;
 		fd_lblMessage2.top = new FormAttachment(lblMessage, 15);
 		fd_lblMessage2.left = new FormAttachment(50, offsetX);

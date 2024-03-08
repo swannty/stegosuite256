@@ -35,7 +35,7 @@ public class GIFImage
 	/**
 	 * Custom parameters for encoding GIF images
 	 */
-	private class GIFImageWriteParam
+	private static class GIFImageWriteParam
 			extends ImageWriteParam {
 
 		GIFImageWriteParam() {

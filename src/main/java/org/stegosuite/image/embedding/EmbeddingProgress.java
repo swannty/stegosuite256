@@ -5,7 +5,7 @@ import java.util.Observable;
 public class EmbeddingProgress
 		extends Observable {
 
-	private int currentPrecentage = 0;
+	private int currentPercentage = 0;
 
 	public EmbeddingProgress() {
 		super();
@@ -13,10 +13,10 @@ public class EmbeddingProgress
 
 	public void progressUpdate(int currentByte, int totalBytes) {
 		int newPercentage = (100 * currentByte) / totalBytes;
-		if (newPercentage > currentPrecentage) {
-			currentPrecentage = newPercentage;
+		if (newPercentage > currentPercentage) {
+			currentPercentage = newPercentage;
 			super.setChanged();
-			super.notifyObservers(currentPrecentage);
+			super.notifyObservers(currentPercentage);
 		}
 	}
 }

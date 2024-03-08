@@ -50,9 +50,9 @@ class DCT {
 
 	/**
 	 * Constructs a new DCT object. Initializes the cosine transform matrix these are used when
-	 * computing the DCT and it's inverse. This also initializes the run length counters and the
+	 * computing the DCT and its inverse. This also initializes the run length counters and the
 	 * ZigZag sequence. Note that the image quality can be worse than 25 however the image will be
-	 * extemely pixelated, usually to a block size of N.
+	 * extremely pixelated, usually to a block size of N.
 	 * 
 	 * @param QUALITY The quality of the image (0 worst - 100 best)
 	 */

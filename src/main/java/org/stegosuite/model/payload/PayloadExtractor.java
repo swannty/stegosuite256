@@ -143,6 +143,7 @@ public class PayloadExtractor {
 				}
 
 				LOG.debug("Payload of {} bytes to be extracted", payloadLength + Payload.LENGTH_NUM_BYTES);
+				LOG.debug("Array: {}",Arrays.toString(dataSizeBytes));
 
 				data = new byte[payloadLength];
 				dataPos = 0;

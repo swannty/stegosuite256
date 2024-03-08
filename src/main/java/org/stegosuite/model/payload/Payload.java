@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class is the outer-most wrapper of the data that the user wants to embed or extract.
+ * This class is the outermost wrapper of the data that the user wants to embed or extract.
  */
 public class Payload {
 

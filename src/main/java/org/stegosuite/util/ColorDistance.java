@@ -63,17 +63,16 @@ public enum ColorDistance {
 		}
 
 		InterchangeablePair<Color, Color> pair = new InterchangeablePair<>(rgb1, rgb2);
-		Double distance = cache.get(this).computeIfAbsent(pair, k -> getDistance(rgb1, rgb2));
 
-		return distance;
+		return cache.get(this).computeIfAbsent(pair, k -> getDistance(rgb1, rgb2));
 	}
 
 	/**
 	 * Converts a color from the RGB color space the L*a*b color space
-	 *
+	 * <p>
 	 * Taken from https://github.com/StanfordHCI/c3/blob/master/java/src/edu/stanford
 	 * /vis/color/LAB.java
-	 *
+	 * <p>
 	 * Maps an RGB triple to binned LAB space (D65). Binning is done by <i>flooring</i> LAB values.
 	 *
 	 * @param ri Red component of the RGB color.
@@ -111,7 +110,7 @@ public enum ColorDistance {
 	/**
 	 * Compares to L*a*b colors and returns the degree of their similarity. The lower the result the
 	 * more similar are the colors.
-	 *
+	 * <p>
 	 * Taken from https://github.com/StanfordHCI/c3/blob/master/java/src/edu/stanford
 	 * /vis/color/LAB.java
 	 *

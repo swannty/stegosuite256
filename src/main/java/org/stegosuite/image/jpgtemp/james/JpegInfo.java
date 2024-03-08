@@ -165,10 +165,10 @@ class JpegInfo {
 				try {
 					throw new AWTException("Grabber returned false: " + grabber.getStatus());
 				} catch (final Exception e) {}
-				;
+
 			}
 		} catch (final InterruptedException e) {}
-		;
+
 		final float Y[][] = new float[this.compHeight[0]][this.compWidth[0]];
 		final float Cr1[][] = new float[this.compHeight[0]][this.compWidth[0]];
 		final float Cb1[][] = new float[this.compHeight[0]][this.compWidth[0]];

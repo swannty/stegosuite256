@@ -2,7 +2,6 @@ package org.stegosuite;
 
 import org.junit.After;
 import org.junit.Test;
-import org.stegosuite.ui.cli.CliParser;
 
 import java.io.File;
 
@@ -29,7 +28,7 @@ public class CliTest {
 		String message = "message";
 		String[] args = getEmbedCommand(imagePath, key, message);
 
-		new CliParser(args).parse();
+		Stegosuite.main(args);
 
 		assertTrue(new File(pathOf("snow_embed.bmp")).exists());
 	}
@@ -39,19 +38,18 @@ public class CliTest {
 		String key = "password";
 		String[] args = getExtractCommand(imagePath, key);
 
-		new CliParser(args).parse();
-
+		Stegosuite.main(args);
 		// TODO: Assert something (Until now, the only side-effect is the logging)
 	}
 
 	private String[] getEmbedCommand(String imagePath, String key, String message) {
-		String command = String.format("-e %s -k %s -m %s",
+		String command = String.format("embed %s -k %s -m %s",
 				imagePath, key, message);
 		return command.split(" ");
 	}
 
 	private String[] getExtractCommand(String imagePath, String key) {
-		String command = String.format("-x %s -k %s",
+		String command = String.format("extract %s -k %s",
 				imagePath, key);
 		return command.split(" ");
 	}

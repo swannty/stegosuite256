@@ -86,7 +86,7 @@ public class BMPPointFilterHomogeneous
 		// System.out.println(Integer.toBinaryString(referenceRgbValue));
 		for (int dX = x - 1; dX <= x + 1; dX++) {
 			for (int dY = y - 1; dY <= y + 1; dY++) {
-				// As soon as 1 pixel in the area is different than the pixel in
+				// As soon as 1 pixel in the area is different from the pixel in
 				// the center, the area is considered NOT to be homogeneous.
 				if (dX != x && dY != y && normalizedRgbValues[dX][dY] != referenceRgbValue) {
 					return Collections.emptyList();

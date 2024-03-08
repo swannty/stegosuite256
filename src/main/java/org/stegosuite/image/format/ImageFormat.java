@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
- * All supported image formats need to extended this class and implement its abstract methods
+ * All supported image formats need to extend this class and implement its abstract methods
  */
 public abstract class ImageFormat {
 

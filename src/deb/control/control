@@ -3,7 +3,7 @@ Priority: optional
 Section: graphics
 Architecture: amd64
 Version: [[version]]
-Depends: java8-runtime
+Depends: java11-runtime
 Maintainer: Stegosuite Developers <devs@stegosuite.org>
 Description: Steganography tool
  Stegosuite is a free steganography tool

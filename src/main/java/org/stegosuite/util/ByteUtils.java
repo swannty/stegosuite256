@@ -176,7 +176,7 @@ public class ByteUtils {
 	 * @return
 	 */
 	public static Iterable<Byte> iterateBits(byte[] bytes, ByteOrder byteOrder) {
-		return () -> new Iterator<Byte>() {
+		return () -> new Iterator<>() {
 
 			private int byteIndex = 0;
 			private int bitIndex = 0;

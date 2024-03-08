@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.stegosuite.image.jpgtemp.net.f5.crypt.F5Random;
 import org.stegosuite.image.jpgtemp.net.f5.crypt.Permutation;
-import org.stegosuite.ui.cli.CliParser;
 
 import java.awt.*;
 import java.io.BufferedOutputStream;
@@ -307,7 +306,8 @@ public class JpegEncoder
 		if (this.embeddedData != null) {
 			// Now we embed the secret data in the permutated sequence.
 //			LOG.debug("Permutation starts");
-			final F5Random random = new F5Random(this.password.getBytes());
+//			final F5Random random = new F5Random(this.password.getBytes());
+			final F5Random random = new F5Random(this.password);
 			final Permutation permutation = new Permutation(coeffCount, random);
 			int nextBitToEmbed = 0;
 			int byteToEmbed = 0;

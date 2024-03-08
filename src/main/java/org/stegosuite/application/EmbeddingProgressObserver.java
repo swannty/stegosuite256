@@ -10,7 +10,7 @@ import java.util.Observer;
 public class EmbeddingProgressObserver
 		implements Observer {
 
-	private ProgressBar progressbar;
+	private final ProgressBar progressbar;
 
 	public EmbeddingProgressObserver(ProgressBar p, EmbeddingProgress e) {
 		progressbar = p;

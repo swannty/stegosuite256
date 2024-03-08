@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The payload is comprised of blocks. It can contain an arbitrary number of blocks. Each concrete
+ * The payload is composed of blocks. It can contain an arbitrary number of blocks. Each concrete
  * type of block must extend this class, and in addition must provide its own unique identifier.
  */
 public abstract class Block {

@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Embed {
 
-	public static void main(final String args[]) {
+	public static void main(final String[] args) {
 		Image image = null;
 		FileOutputStream dataOut = null;
 		File file, outFile;

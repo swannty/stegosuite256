@@ -175,7 +175,7 @@ public class EmbedUi implements StegosuiteUI {
 		
 		presenter.addMessageToPayload(message);
 
-		runInNewThread(() -> presenter.embedNotifying(progress, password));
+		runInNewThread(() -> presenter.embedNotifying(progress, password, null));
 	}
 
 	private void startExtraction(Composite compositeControls) {
@@ -327,7 +327,7 @@ public class EmbedUi implements StegosuiteUI {
 			int capacity = presenter.getEmbeddingCapacity();
 
 			runInGuiThread(() -> {
-				Gui.setStatusBarMsg(L.getString("statusbar_capacity") + ": " + ImageUtils.formatSize(capacity));
+				Gui.setStatusBarMsg(L.getString("statusbar_capacity") + ": " + ImageUtils.formatSize(capacity), String.format("%d Bytes", capacity));
 				embedButton.setEnabled(true);
 				extractButton.setEnabled(true);
 				cursor = new Cursor(Display.getDefault(), SWT.CURSOR_ARROW);

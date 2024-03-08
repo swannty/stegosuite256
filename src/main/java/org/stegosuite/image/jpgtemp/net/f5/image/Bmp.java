@@ -10,7 +10,7 @@ public class Bmp {
 
 	int iDataOffset;
 
-	int pixel[] = null;
+	int[] pixel = null;
 
 	BufferedInputStream imageFile;
 

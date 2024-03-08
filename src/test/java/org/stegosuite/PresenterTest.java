@@ -65,7 +65,7 @@ public class PresenterTest implements StegosuiteUI, Observer {
 	public void embeddingTest() throws Exception {
 		presenter = presenterWithImage(IMAGE_NAME);
 		presenter.addMessageToPayload(message);
-		presenter.embedNotifying(progressListener, password);
+		presenter.embedNotifying(progressListener, password, null);
 
 		assertEquals(100, currentProgress);
 		assertNotNull(outputVisualizer);
@@ -78,7 +78,7 @@ public class PresenterTest implements StegosuiteUI, Observer {
 	public void extractTest() throws Exception {
 		presenter = presenterWithImage(IMAGE_NAME);
 		presenter.addMessageToPayload(message);
-		presenter.embedNotifying(progressListener, password);
+		presenter.embedNotifying(progressListener, password, null);
 		resetCurrentProgress();
 
 		presenter = presenterWithImage(EMBEDDED_IMAGE);
@@ -95,7 +95,7 @@ public class PresenterTest implements StegosuiteUI, Observer {
 		presenter = presenterWithImage(IMAGE_NAME);
 		presenter.addFileToPayload(pathOf(FILE_NAME));
 		presenter.addMessageToPayload(message);
-		presenter.embedNotifying(progressListener, password);
+		presenter.embedNotifying(progressListener, password, null);
 		resetCurrentProgress();
 		presenter = presenterWithImage(EMBEDDED_IMAGE);
 

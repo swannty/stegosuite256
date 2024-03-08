@@ -26,6 +26,16 @@ public class StegosuitePresenter implements EmbeddingDoneListener, ExtractingDon
 	private ImageFormat image;
 	private Payload payload;
 	private Embedding embedding;
+	private File outputPath;
+	
+	public void setEmbedding(EmbeddingFactory embeddingAlgorithm) {
+		if (embeddingAlgorithm == null) {
+			this.embedding = embeddingFor(image);
+		} else {
+			this.embedding = embeddingAlgorithm.newEmbedding(image);
+		}
+	}
+
 	private StegosuiteUI ui;
 	private EmbeddingProgress progressListener = new EmbeddingProgress();
 
@@ -46,9 +56,9 @@ public class StegosuitePresenter implements EmbeddingDoneListener, ExtractingDon
 		return embedding;
 	}
 
-	public void embedNotifying(EmbeddingProgress progressListener, String password) {
+	public void embedNotifying(EmbeddingProgress progressListener, String password, File output) {
 		this.progressListener = progressListener;
-
+		this.outputPath = output;
 		embed(password);
 	}
 
@@ -86,8 +96,10 @@ public class StegosuitePresenter implements EmbeddingDoneListener, ExtractingDon
 
 	private void save(ImageFormat embeddedImage) {
 		try {
-			String outputPath = getOutputPathFor(embeddedImage);
-			embeddedImage.save(new File(outputPath));
+			if (outputPath == null) {
+				outputPath = new File(getOutputPathFor(embeddedImage));
+			}
+			embeddedImage.save(outputPath);
 		} catch (SteganoImageException e) {
 			e.printStackTrace();
 		}

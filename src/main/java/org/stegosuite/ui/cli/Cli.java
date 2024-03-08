@@ -1,97 +1,122 @@
 package org.stegosuite.ui.cli;
 
-import java.util.List;
-
-import org.apache.commons.cli.CommandLine;
 import org.eclipse.swt.graphics.ImageData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.stegosuite.application.StegosuitePresenter;
 import org.stegosuite.application.StegosuiteUI;
+import org.stegosuite.image.embedding.EmbeddingProgress;
 import org.stegosuite.image.embedding.Visualizer;
 import org.stegosuite.image.format.ImageFormat;
 import org.stegosuite.model.exception.SteganoEmbedException;
 import org.stegosuite.model.exception.SteganoExtractException;
 import org.stegosuite.model.exception.SteganoImageException;
 import org.stegosuite.ui.gui.ImageUtils;
+import org.stegosuite.util.FileUtils;
+
+import java.io.File;
+import java.util.List;
 
 public class Cli
 		implements
 		StegosuiteUI {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Cli.class);
-	private ImageFormat image;
 	private StegosuitePresenter presenter;
 
-	private String getSteganogramPath(CommandLine cmd) {
-		if (cmd.getArgs().length > 0) {
-			return cmd.getArgs()[0];
-		} else {
-			return null;
+
+	public int embed(File steganogram, String message, List<File> filesToBeEmbedded, String key, boolean noNoise, File outputPath) {
+		if (!steganogram.exists()){
+			LOG.error("Error: Image does not exist: {}", steganogram.getPath());
+			return 1;
 		}
-	}
+		if (!steganogram.canRead()){
+			LOG.error("Error: Can't read image: {}", steganogram.getPath());
+			return 1;
+		}
+		if (!validImageFormat(steganogram.getPath()))
+			return 1;
+		if (message == null && filesToBeEmbedded == null) {
+			LOG.error("Error: Nothing to embed. Use -m or -f to embed a message or files.");
+			return 2;
+		}
 
-	public void embed(CommandLine cmd) {
-		String steganogramPath = getSteganogramPath(cmd);
-		if (steganogramPath == null)
-			return;
-		if (!validImageFormat(steganogramPath))
-			return;
+		pointFilter(noNoise);
 
-		pointFilter(cmd);
-
-		String message = cmd.getOptionValue("m");
 		if (message != null) {
 			presenter.addMessageToPayload(message);
 		}
 
-		String[] files = cmd.getOptionValues("f");
-		if (files != null) {
-			for (String string : files) {
-				presenter.addFileToPayload(string);
+		if (filesToBeEmbedded != null) {
+			for (File f : filesToBeEmbedded) {
+				if (!f.exists()){
+					LOG.error("Error: Can't find file: {}", f.getPath());
+					return 1;
+				}
+				if (!f.canRead()){
+					LOG.error("Error: Can't read file: {}", f.getPath());
+					return 1;
+				}
+				presenter.addFileToPayload(f.getPath());
 			}
 		}
+		File my_outputPath;
+		if (outputPath == null){
+			my_outputPath = new File(FileUtils.addFileNameSuffix(steganogram.getPath(), "_embed"));
+		} else {
+			my_outputPath = outputPath;
+		}
 
-		String key = cmd.getOptionValue("k");
-
-		embed(key);
+		embed(key, my_outputPath);
+		return 0;
 	}
 
-	private void embed(String key) {
+	private void embed(String key, File outputPath) {
 		LOG.info("Embedding data...");
-		presenter.embed(key);
+		presenter.embedNotifying(new EmbeddingProgress(), key, outputPath);
 	}
 
-	public void extract(CommandLine cmd) {
-		String steganogramPath = getSteganogramPath(cmd);
-		if (steganogramPath == null)
-			return;
-		if (!validImageFormat(steganogramPath))
-			return;
+	public int extract(File steganogram, String key, boolean noNoise ) {
+		if (!steganogram.exists()){
+			LOG.error("Error: Image does not exist: {}", steganogram.getPath());
+			return 1;
+		}
+		if (!steganogram.canRead()){
+			LOG.error("Error: Can't read image: {}", steganogram.getPath());
+			return 1;
+		}
+		if (!validImageFormat(steganogram.getPath()))
+			return 1;
 
-		pointFilter(cmd);
-		String key = cmd.getOptionValue("k");
+		pointFilter(noNoise);
 		extract(key);
+		return 0;
 	}
 
 	private void extract(String key) {
 		LOG.info("Extracting data...");
-		presenter.extractUsing(key);
+		presenter.extractNotifying(new EmbeddingProgress(), key);
 	}
 
-	public void capacity(CommandLine cmd) {
-		String steganogramPath = getSteganogramPath(cmd);
-		if (steganogramPath == null)
-			return;
-		if (!validImageFormat(steganogramPath))
-			return;
-		pointFilter(cmd);
+	public int capacity(File steganogram, boolean noNoise) {
+		if (!steganogram.exists()){
+			LOG.error("Error: Image does not exist: {}", steganogram.getPath());
+			return 1;
+		}
+		if (!steganogram.canRead()){
+			LOG.error("Error: Can't read image: {}", steganogram.getPath());
+			return 1;
+		}
+		if (!validImageFormat(steganogram.getPath()))
+			return 1;
+		pointFilter(noNoise);
 		int capacity = presenter.getEmbeddingCapacity();
 		LOG.info("Capacity: {}", ImageUtils.formatSize(capacity));
+		return 0;
 	}
 
-	private void pointFilter(CommandLine cmd) {
-		if (cmd.hasOption("disable-noise-detection")) {
+	private void pointFilter(Boolean noNoise) {
+		if (noNoise) {
 			presenter.setPointFilter(0);
 		} else {
 			presenter.setPointFilter(1);
@@ -99,7 +124,7 @@ public class Cli
 	}
 
 	private boolean validImageFormat(String steganogramPath) {
-		image = getImageFormat(steganogramPath);
+		ImageFormat image = getImageFormat(steganogramPath);
 		if (image == null) {
 			showFormatNotSupportedError();
 			return false;

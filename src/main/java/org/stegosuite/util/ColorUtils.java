@@ -28,7 +28,7 @@ public class ColorUtils {
 		if (colors.size() < 2) {
 			return colors;
 		}
-
+		//TODO: Do not remove duplicated colors, the size of the List should stay the same (Gifshuffle needs this to work)
 		Set<Color> unsortedBase = new HashSet<>(colors);
 		Map<Double, List<Color>> sortedLists = new ConcurrentHashMap<>();
 
