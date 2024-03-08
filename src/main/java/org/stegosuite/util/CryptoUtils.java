@@ -98,7 +98,7 @@ public class CryptoUtils {
 	 * 
 	 * @param key
 	 */
-	public static Random seededRandom(String key) {
+	public static SecureRandom seededRandom(String key) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance(RANDOM_MESSAGE_DIGEST_ALGORITHM);
 			byte[] output = digest.digest(key.getBytes(StandardCharsets.UTF_8));
