@@ -24,14 +24,14 @@ public class CryptoUtils {
 
 	private static final int SALT_LENGTH = 16;
 
-	private static final String KEY_ALGORITHM = "PBKDF2WithHmacSHA1";
+	private static final String KEY_ALGORITHM = "PBKDF2WithHmacSHA256";
 
 	/**
 	 * Key lengths greater than 128 bit require JCE Unlimited Strength Jurisdiction Policy files at
 	 * runtime which are a hassle to install. Available measures to circumvent are quite possible
 	 * illegal.
 	 */
-	private static final int KEY_LENGTH = 128;
+	private static final int KEY_LENGTH = 256;
 
 	private static final String CIPHER_ALGORITHM = "AES";
 
@@ -42,7 +42,7 @@ public class CryptoUtils {
 	 */
 	private static final byte[] IV = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-	private static final String RANDOM_MESSAGE_DIGEST_ALGORITHM = "MD5";
+	private static final String RANDOM_MESSAGE_DIGEST_ALGORITHM = "SHA-256";
 
 	/**
 	 * Encrypts a byte array
