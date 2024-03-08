@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
-import java.util.Random;
+//import java.util.Random;
 
 /**
  *
@@ -103,7 +103,9 @@ public class CryptoUtils {
 			MessageDigest digest = MessageDigest.getInstance(RANDOM_MESSAGE_DIGEST_ALGORITHM);
 			byte[] output = digest.digest(key.getBytes(StandardCharsets.UTF_8));
 			long rndSeed = ByteBuffer.wrap(output).getLong();
-			return new Random(rndSeed);
+			ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+			buffer.putLong(rndSeed);
+			return new SecureRandom(buffer.array());
 		} catch (NoSuchAlgorithmException e) {
 			// Should never happen
 		}

@@ -1,22 +1,22 @@
 package org.stegosuite.image.jpgtemp.net.f5.crypt;
 
-//import java.security.SecureRandom;
+import java.security.SecureRandom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Random;
+//import java.util.Random;
 
 public class F5Random {
 
-    private final Random random;
+    private final SecureRandom random;
 
     private static final Logger LOG = LoggerFactory.getLogger(F5Random.class);
 
     private final byte[] b;
 
     public F5Random(final String password) {
-        this.random = new Random();
+        this.random = new SecureRandom();
         long seed = stringToNumber(password);
         LOG.debug("Seed: {}", seed);
         this.random.setSeed(seed);

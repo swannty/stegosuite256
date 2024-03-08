@@ -8,7 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.function.Predicate;
 
 public class ByteUtils {
@@ -71,7 +71,7 @@ public class ByteUtils {
 	 * @param predicate
 	 */
 	public static byte getRandomByte(Predicate<Byte> predicate) {
-		Random random = new Random();
+		SecureRandom random = new SecureRandom();
 		do {
 			byte[] b = new byte[1];
 			random.nextBytes(b);
