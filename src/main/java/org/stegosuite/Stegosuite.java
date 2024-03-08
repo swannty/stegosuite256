@@ -21,7 +21,7 @@ import java.util.concurrent.Callable;
 
 import static picocli.CommandLine.Model.UsageMessageSpec.*;
 
-@Command(name = "stegosuite", version = "stegosuite 0.9", mixinStandardHelpOptions = true,
+@Command(name = "stegosuite", version = "stegosuite 0.9.1", mixinStandardHelpOptions = true,
         subcommands = {CommandLine.HelpCommand.class}, usageHelpAutoWidth = true,
         header = "Steganography tool to hide information in image files",
         synopsisHeading = "%nUsage: ",
@@ -47,7 +47,7 @@ public class Stegosuite implements Runnable {
     static
     CommandSpec spec;
 
-    @Command(name = "stegosuite", version = "stegosuite 0.9", mixinStandardHelpOptions = true,
+    @Command(name = "stegosuite", version = "stegosuite 0.9.1", mixinStandardHelpOptions = true,
             subcommands = {CommandLine.HelpCommand.class, GuiSubCommand.class,
                     EmbedSubCommand.class, ExtractSubCommand.class, CapacitySubCommand.class},
             usageHelpAutoWidth = true,
