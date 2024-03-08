@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.stegosuite</groupId>
     <artifactId>stegosuite</artifactId>
-    <version>0.9.0</version>
+    <version>0.9.1</version>
     <name>stegosuite</name>
     <description>A free steganography tool to hide information in image files.</description>
     <url>https://codeberg.org/tob/stegosuite</url>
